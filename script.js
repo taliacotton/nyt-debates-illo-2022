@@ -8,7 +8,7 @@ let imageObjectArray = [];
 for (let emoji of emojiFileNames) {
     let imageObject = {
         // src: `/emojis/${emoji}.png`,
-        src: `https://github.com/taliacotton/nyt-debates-illo-2022/blob/main/emojis/${emoji}.png`,
+        src: `https://github.com/taliacotton/nyt-debates-illo-2022/blob/main/emojis/${emoji}.png?raw=true`,
         width: 100,
         height: 100
     };
