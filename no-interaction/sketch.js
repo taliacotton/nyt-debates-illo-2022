@@ -24,7 +24,7 @@ class MiniParticle {
       this.pos = createVector(x, y);
       this.vel = createVector(dx, dy)
       this.img = emoji;
-      this.rotation;
+      this.rotation = random(180);
       this.size = random(25, 35);
   }
   update() {
