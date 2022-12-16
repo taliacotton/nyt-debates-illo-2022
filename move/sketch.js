@@ -16,15 +16,15 @@ function generateVel(){
 }
 
 class MiniParticle {
-  constructor(originX, originY) {
+  constructor(originX, originY, emoji) {
       const x = originX;
       const y = originY;
       const dx = generateVel()/2;
       const dy = generateVel()/2;
       this.pos = createVector(x, y);
       this.vel = createVector(dx, dy)
-      this.img = random(emojis);
-      this.size = random(20, 30);
+      this.img = emoji;
+      this.size = random(25, 35);
   }
   update() {
       this.pos.add(this.vel);
@@ -84,7 +84,7 @@ class Particle {
         let distance = dist(x, y, p.pos.x, p.pos.y);
         if (distance <= particleSize*2 && distance != 0){
           for (let i=0;i<numMiniParticles;i++){
-            miniParticles.push(new MiniParticle(x, y))
+            miniParticles.push(new MiniParticle(x, y, this.img))
           }
           // this.remove();
           // console.log(this.index)

@@ -16,21 +16,21 @@ function generateVel(){
 }
 
 class MiniParticle {
-  constructor(originX, originY) {
+  constructor(originX, originY, emoji) {
       const x = originX;
       const y = originY;
       const dx = generateVel()/2;
       const dy = generateVel()/2;
       this.pos = createVector(x, y);
       this.vel = createVector(dx, dy)
-      this.img = random(emojis);
-      this.size = random(20, 30);
+      this.img = emoji;
+      this.rotation;
+      this.size = random(25, 35);
   }
   update() {
       this.pos.add(this.vel);
-      this.size-=0.6;
+      this.size-=1.2;
       if (this.size <=2){
-        // this.size = 0;
         let thisIndex = miniParticles.indexOf(this);
         miniParticles.splice(thisIndex, 1);
       }
@@ -39,9 +39,11 @@ class MiniParticle {
       const { x, y } = this.pos;
 
       noStroke();
-      fill("white");
-      // ellipse(x, y, this.size);
-      image(this.img, x, y, this.size, this.size);
+      push();
+          translate(x,y);
+          rotate(this.rotation)
+          image(this.img, 0, 0, this.size, this.size);
+      pop();
   }  
 
 }
@@ -56,8 +58,7 @@ class Particle {
       this.pos = createVector(x, y);
       this.vel = createVector(dx, dy)
       this.img = random(emojis);
-      // this.src = `../emojis/${random(emojiFileNames)}.png`;
-      // this.speed = random(5);
+      this.rotation = random(180);
       this.counter = 0;
       this.color = "white"
     }
@@ -84,13 +85,10 @@ class Particle {
         let distance = dist(x, y, p.pos.x, p.pos.y);
         if (distance <= particleSize*2 && distance != 0){
           for (let i=0;i<numMiniParticles;i++){
-            miniParticles.push(new MiniParticle(x, y))
+            miniParticles.push(new MiniParticle(x, y, this.img))
           }
-          // this.remove();
-          // console.log(this.index)
 
           particles.splice(i, 1)
-          // particles.splice(this)
 
           this.color = "red";
           p.color = "red";
@@ -117,7 +115,11 @@ class Particle {
         noStroke();
         fill(this.color);
         // ellipse(x, y, 20);
-        image(this.img, x, y, particleSize, particleSize);
+        push();
+          translate(x,y);
+          rotate(this.rotation)
+          image(this.img, 0, 0, particleSize, particleSize);
+        pop();
     }  
 }
   
