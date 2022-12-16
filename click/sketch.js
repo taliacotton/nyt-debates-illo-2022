@@ -24,13 +24,13 @@ class MiniParticle {
       this.pos = createVector(x, y);
       this.vel = createVector(dx, dy)
       this.img = random(emojis);
-      this.size = random(20, 30);
+      this.rotation = random(180);
+      this.size = random(25, 35);
   }
   update() {
       this.pos.add(this.vel);
-      this.size-=0.6;
+      this.size-=1;
       if (this.size <=2){
-        // this.size = 0;
         let thisIndex = miniParticles.indexOf(this);
         miniParticles.splice(thisIndex, 1);
       }
@@ -40,8 +40,11 @@ class MiniParticle {
 
       noStroke();
       fill("white");
-      // ellipse(x, y, this.size);
-      image(this.img, x, y, this.size, this.size);
+      push();
+        translate(x,y);
+        rotate(this.rotation);
+        image(this.img, 0, 0, this.size, this.size);
+      pop();
   }  
 
 }
@@ -56,10 +59,8 @@ class Particle {
       this.pos = createVector(x, y);
       this.vel = createVector(dx, dy)
       this.img = random(emojis);
-      // this.src = `../emojis/${random(emojiFileNames)}.png`;
-      // this.speed = random(5);
+      this.rotation = random(180);
       this.counter = 0;
-      this.color = "white"
     }
     
     detectEdges() {
@@ -86,18 +87,8 @@ class Particle {
           for (let i=0;i<numMiniParticles;i++){
             miniParticles.push(new MiniParticle(x, y))
           }
-          // this.remove();
-          // console.log(this.index)
-
           particles.splice(i, 1)
-          // particles.splice(this)
-
-          this.color = "red";
-          p.color = "red";
-        } else {
-          this.color = "white";
-          p.color = "white"
-        }
+        } 
       }
     }
     
@@ -115,9 +106,11 @@ class Particle {
         const { x, y } = this.pos;
   
         noStroke();
-        fill(this.color);
-        // ellipse(x, y, 20);
-        image(this.img, x, y, particleSize, particleSize);
+        push();
+          translate(x,y);
+          rotate(this.rotation);
+          image(this.img, 0, 0, particleSize, particleSize);
+        pop();
     }  
 }
   
@@ -153,19 +146,14 @@ function draw(){
 
     // generate another one every 10 frames
     if (frameCount % 10 == 0){
-      // for (let i=0;i<5;i++){
          let originPos = generateOriginPos();
          particles.push(new Particle(originPos[0], originPos[1]));
-      // }
        
     }
 }
 
 
 function mousePressed(){
-  // if (random() < 0.5){
     particles.push(new Particle(mouseX, mouseY))
-  // }
-    
 }
 
