@@ -12,7 +12,7 @@ function generateOriginPos(){
   return {x: origin[0], y: origin[1]}
 }
 function generateVel(){
-  return random(3, 10) * random([-1, 1]);
+  return random(3, 8) * random([-1, 1]);
 }
 
 class MiniParticle {
@@ -104,7 +104,7 @@ class Particle {
     updatePos() {
       this.pos.add(this.vel);
       this.counter++;
-      if (this.counter >= 10){
+      if (this.counter >= 50){
         this.detectCollision();
       }
       this.detectEdges();
