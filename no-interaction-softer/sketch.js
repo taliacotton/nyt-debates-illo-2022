@@ -12,11 +12,11 @@ function generateOriginPos(){
   return {x: origin[0], y: origin[1]}
 }
 function generateVel(){
-  return random(1, 3) * random([-1, 1]);
+  return random(2, 4) * random([-1, 1]);
 }
 
 class MiniParticle {
-  constructor(originX, originY, emoji) {
+  constructor(originX, originY) {  
       const x = originX;
       const y = originY;
       const dx = generateVel()/2;
@@ -76,16 +76,21 @@ class Particle {
 
     detectCollision(){
       const { x, y } = this.pos;
-      const radius = particleSize/2;
 
       for (let i=0;i<particles.length;i++){
         let p = particles[i]
         let distance = dist(x, y, p.pos.x, p.pos.y);
         if (distance <= particleSize/2 && distance != 0){
           for (let i=0;i<numMiniParticles;i++){
-            miniParticles.push(new MiniParticle(x, y, this.img))
+            miniParticles.push(new MiniParticle(x, y))
           }
+          // get rid of the particle that exploded
           particles.splice(i, 1)
+
+          // make a new particle
+          // let originPos = generateOriginPos();
+          // particles.push(new Particle(originPos.x, originPos.y));
+
         } 
       }
     }
@@ -109,11 +114,10 @@ class Particle {
         pop();
     }  
 }
-  
 
 function preload(){
   for (let emojiFileName of emojiFileNames){
-    let img = loadImage(`../emojis/${emojiFileName}.png`);
+    let img = loadImage(`../emojis-smaller/${emojiFileName}.png`);
     emojis.push(img);
   }
 }
@@ -148,4 +152,6 @@ function draw(){
 }
 
 
-
+function windowResized() {
+  resizeCanvas(windowWidth, windowHeight);
+}
